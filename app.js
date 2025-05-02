@@ -278,13 +278,23 @@ app.get("/favs/:userId", async (req, res, next) => {
     }
 });
 
-app.post("/add-product-basket", async (req, res, next) => {
+app.post("/basket", async (req, res, next) => {
     const { quantity, productId, userId } = req.body;
 
     try {
         
-            await basketModel.create({ userId: userId, productId: productId, quantity: quantity });
-        
+          const isProdExists = await basketModel.findOne({where:{
+            userId: userId,
+            productId: productId
+          }});
+          if(isProdExists){
+            await basketModel.update({
+                quantity: quantity,
+
+            },{where: { userId:userId , productId:productId}});
+          }else{
+            await basketModel.create({userId:userId, productId:productId, quantity:quantity});
+          }
 
         const basket = await basketModel.findAll({
             include: [
