@@ -140,9 +140,9 @@ app.post("/new-categories",async(req,res)=>{
 app.get("/all-categories",async(req,res)=>{
     try{
         const allCategories = await categoryModel.findAll();
-        if(!newCategory){
-            res.status(500).json({status:"error",data:"Kategori Oluşturulamadı"})
-        }
+    
+            res.status(500).json({status:"error",data:"Kategori Oluşturulamadı"});
+    
     res.status(200).json({status:"success", data: allCategories });
     }catch(error){
         res.status(500).json({status:"error",data: error})
