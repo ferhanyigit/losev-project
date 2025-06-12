@@ -1,10 +1,12 @@
 const express = require('express');
 const { sequelize } = require('./database'); // Sequelize bağlantısını içe aktar
+const cors= require('cors');
 const { userModel, announcementModel, categoryModel, 
     productModel, favoriteModel, basketModel } = require("./database");
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 const bcrypt = require('bcrypt');
 const { body, validationResult } = require("express-validator");
 require('dotenv').config();
